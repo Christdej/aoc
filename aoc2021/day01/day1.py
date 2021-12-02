@@ -1,4 +1,4 @@
-def sliding_window(data, window_size):
+def sliding_windows(data, window_size):
     windows = []
     for i in range(len(data) - window_size + 1):
         windows.append(data[i : i + window_size])
@@ -6,7 +6,7 @@ def sliding_window(data, window_size):
 
 
 def sonar_sweep(data, window_size=1):
-    r = sliding_window(data, window_size=window_size)
+    r = sliding_windows(data, window_size=window_size)
     f = r[0]
     n = 0
     for i in r[1:]:
