@@ -2,4 +2,10 @@
 venv
 
 */egg-info
+*.egg-info
+__pycache__/
+
 .vscode
+.env
+
+build/

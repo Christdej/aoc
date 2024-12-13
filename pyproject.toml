@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=64.0", "setuptools_scm>=8"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aoc"
+authors = [{ name = "Christian de Jonge", email = "chjo@equinor.com" }]
+description = "Advent of Code"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { file = "LICENSE" }
+classifiers = [
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Software Development :: Libraries",
+]
+dependencies = [
+    "numpy",
+    "pytest",
+    "python-dotenv",
+    "requests",
+    "beautifulsoup4",
+]
+dynamic = ["version"]
+
+[project.urls]
+repository = "https://github.com/christdej.git"
+
+[project.scripts]
+aoc = "aoc.automate:main"
+
+[tool.setuptools_scm]
+# This section is empty but required for dynamic versioning.
+
+[tool.black]
+line_length = 88
