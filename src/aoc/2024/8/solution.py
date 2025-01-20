@@ -29,8 +29,10 @@ def calc_antinodes(pair):
     return pos1, pos2
 
 
-def check_inside(pos, arr):
-    return 0 <= pos[0] < len(arr) and 0 <= pos[1] < len(arr[0])
+def check_inside(pos, size):
+    xsize = size[0]
+    ysize = size[1]
+    return 0 <= pos[0] < xsize and 0 <= pos[1] < ysize
 
 
 def first_task(input_data: list[str]):
@@ -39,16 +41,63 @@ def first_task(input_data: list[str]):
         pairs = list(itertools.combinations(value, 2))
         for pair in pairs:
             pos1, pos2 = calc_antinodes(pair)
-            if check_inside(pos1, arr):
+            size = [len(arr), len(arr[0])]
+            if check_inside(pos1, size):
                 arr[pos1[0]][pos1[1]] = 1
-            if check_inside(pos2, arr):
+            if check_inside(pos2, size):
                 arr[pos2[0]][pos2[1]] = 1
     c = sum(arr.count(1) for arr in arr)
     return c
 
 
+def cakc_all_antinodes(pair, size):
+    a = pair[0]
+    b = pair[1]
+
+    # xsize = size[0]
+    # ysize = size[1]
+
+    antinodes = []
+    antinodes.append(a)
+    antinodes.append(b)
+
+    tempa = [a[0], a[1]]
+    tempb = [b[0], b[1]]
+    while True:
+        diff1 = [tempa[0] - tempb[0], tempa[1] - tempb[1]]
+        tempb = [tempa[0], tempa[1]]
+        tempa = [tempa[0] + diff1[0], tempa[1] + diff1[1]]
+        if check_inside(tempa, size):
+            antinodes.append(tempa)
+        else:
+            break
+
+    tempa = [a[0], a[1]]
+    tempb = [b[0], b[1]]
+    while True:
+        diff2 = [tempb[0] - tempa[0], tempb[1] - tempa[1]]
+        tempa = [tempb[0], tempb[1]]
+        tempb = [tempb[0] + diff2[0], tempb[1] + diff2[1]]
+        if check_inside(tempb, size):
+            antinodes.append(tempb)
+        else:
+            break
+
+    return antinodes
+
+
 def second_task(input_data: list[str]):
-    return None
+    ant, arr = parse_input(input_data)
+    for key, value in ant.items():
+        pairs = list(itertools.combinations(value, 2))
+        for pair in pairs:
+            # print("PAIR: ", pair)
+            ans = cakc_all_antinodes(pair, [len(arr), len(arr[0])])
+            # print("ANS: ", ans)
+            for an in ans:
+                arr[an[0]][an[1]] = 1
+    c = sum(arr.count(1) for arr in arr)
+    return c
 
 
 def run_day():

@@ -81,3 +81,60 @@ def get_lines_through_pos_diagonal(arr, i, j):
 def chunks(lst, n):
     for i in range(0, len(lst), n):
         yield lst[i : i + n]
+
+
+def pairwise(iterable):
+    a = iter(iterable)
+    return zip(a, a)
+
+
+def depth_first_search(arr, start_x, start_y, target, prev=-1):
+    neighbours = {(-1, 0), (0, 1), (1, 0), (0, -1)}
+    if (
+        start_x < 0
+        or start_x >= len(arr)
+        or start_y < 0
+        or start_y >= len(arr[start_x])
+    ):
+        return set()
+    v = arr[start_x][start_y]
+    if v != prev + 1:
+        return set()
+    if v == target:
+        return {(start_x, start_y)}
+    r = set()
+    for a in neighbours:
+        r = r.union(depth_first_search(arr, start_x + a[0], start_y + a[1], target, v))
+    return r
+
+
+def create_graph(arr):
+    G = {}
+    for i, row in enumerate(arr):
+        for j, e in enumerate(row):
+            G[(i, j)] = e
+    return G
+
+
+# G = {(i)+(j)*1j: e for i, row in enumerate(data) for j, e   in enumerate(row)}
+
+# visited = set()
+
+
+def dfs_graph(G, p, t, prev=-1):
+    print("P: ", p)
+    print("T: ", t)
+    if p in visited and G.get(p) == t:
+        return {p}
+    if G.get(p) != t:
+        return set()
+    visited.add(p)
+    r = set()
+    neighbours = {(-1, 0), (0, 1), (1, 0), (0, -1)}
+    for a in neighbours:
+        print("A: ", a)
+        temp = dfs_graph(G, (p[0] + a[0], p[1] + a[1]), t, prev=p)
+        print("Temp: ", temp)
+        visited = visited.union(temp)
+    # neighbors = {(p + dr * 1j, dr) for p, dr in fence}
+    return r

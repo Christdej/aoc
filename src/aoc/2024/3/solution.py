@@ -32,17 +32,20 @@ def second_task(input_data: list[str]):
     for line in input_data:
         long_string += line
     ss = long_string.split("don't()")
+    print("SS: ", ss)
     muls = parse_input(ss[0])
     for mul in muls:
         c += int(mul[0]) * int(mul[1])
-    for s in ss[1:-1]:
+    for s in ss[1:]:
         dos = s.split("do()")
         for do in dos[1:]:
             muls = parse_input(do)
             for mul in muls:
                 c += int(mul[0]) * int(mul[1])
 
-    # muls = parse_input(string)
+    # muls = parse_input(ss[-1])
+    # for mul in muls:
+    #     c += int(mul[0]) * int(mul[1])
     return c
 
 
